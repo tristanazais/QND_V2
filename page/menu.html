@@ -49,30 +49,30 @@
 
 	<div data-role="page" id="pageone">
   <div data-role="header">
-  	<div id="deconnexion" style="float: right;margin-right: 3%;margin-top: 1%;"><a onclick="kill_session();" href="home.html">Deconnexion</a></div>
-    <h1>Menu</h1>
+  	<div id="deconnexion" style="float: right;margin-right: 3%;margin-top: 1%;">
+    <!-- bouton icon -->
+    <a data-icon="delete" onclick="kill_session();" href="home.html">
+    Deconnection
+    </a></div>
+    <h1>QND</h1>
 
   </div>
 
 	  <div data-role="content">
        <div data-role="controlgroup" data-type="vertical">
               
-              
-    <a href="favoris.html" data-transition="pop"  data-role="button" onClick='setTimeout(function(){init_favoris();},200);'>Mes Favoris</a>
+          <a href="choix_perso_liste.html" data-transition="flip"  data-role="button" onClick='setTimeout(function(){appel_number_size_max();},200);'>Liste de médecins QND</a>    
+    
     <a href="geomap.html" data-transition="pop"  data-role="button" onClick='setTimeout(function(){ajax_gmap();},200);'>Carte des médecins QND</a>
-    <a href="stat.html" data-transition="flip"  data-role="button">Statisque</a>
-	<a href="choix_perso_liste.html" data-transition="flip"  data-role="button" onClick='setTimeout(function(){appel_number_size_max();},200);'>Liste de médecins QND</a>
-    <a href="info.html" data-transition="turn" data-role="button">Information</a>
+    <a href="favoris.html" data-transition="pop"  data-role="button" onClick='setTimeout(function(){init_favoris();},200);'>Mes Favoris</a>
     <a href="profil.html" data-transition="turn" data-role="button" onClick='setTimeout(function(){init_profil();},200);'>Votre Profil</a>
     <a href="calendar.html" data-transition="pop" data-role="button" onClick='setTimeout(function(){add_new_calendar();},200);'>Calendrier</a>
-    
-    <a href="test_sms.html" data-transition="turn" data-role="button">SMS exemple </a>
-    
+    <a href="info.html" data-transition="turn" data-role="button">Information</a>
       	</div>
   	</div>
   
   <div data-role="footer">
-    <h1>Footer</h1>
+    
   </div>
 </div> 
 
