@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-language" content="fr-FR" />
+    <meta http-equiv="content-type" content="text/html"; charset="UTF-8" />
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/calendar.css" />
+    
+    <LINK rel="stylesheet" type="text/css" href="../css/datepicker.css">
+    <LINK rel="stylesheet" type="text/css" href="../css/c.css">
+    
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <script src="../js/Chart.js"></script>
+    <script src="../js/modernizr.custom.63321.js"></script>
+    <script src="../js/save.js"></script>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.tools.min.js"></script>
+    <script src="../js/jquerytouchwipe.js"></script>
+    <script src="../js/iscroll.js"></script>
+    <script src="../js/fonctions.js"></script>
+    <script src="../js/mail_oublie.js"></script>
+    <script src="../js/inscription.js"></script>
+    <script src="../js/calendar.js"></script>
+    <script src="../js/Ajout_favoris.js"></script>
+    <script type="text/javascript" src="js/jquery.calendario.js"></script>
+        
+        <!-- Test theme -->
+        <link rel="stylesheet" href="../css/themes/QND.min.css" />
+    <link rel="stylesheet" href="../css/themes/jquery.mobile.icons.min.css" />
+    
+        <link rel="stylesheet" href="../css/jquery.mobile.structure-1.4.0-rc.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="../css/css.css" />
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/jquery.mobile-1.4.0-rc.1.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true" type="text/javascript"></script>
+      <script type="text/javascript" src="../js/gmap3.js"></script> 
+      <script type="text/javascript" src="../js/geomap.js"></script> 
+    
+     <script type="text/javascript" src="../js/smsplugin.js"></script>
+		
+<title>Liste</title>
+<script>
+$(document).ready(function(){
+  $("").on("click",function(){
+    alert("1");
+  });
+});
+</script>
+
+
+</head>
+
+<body>
+
+	<div data-role="page" id="pageone">
+  <div data-role="header">
+    <div id="retour" style="float: left;margin-left: 1%;margin-top: 1%;"><a href="menu.html">Retour</a></div>
+    <h1>Votre Recherche</h1>
+  </div>
+
+  <div id="content_liste_medecin_choix"  data-role="content">
+
+   <div data-role="controlgroup" data-type="vertical">   
+
+       <input id="find_cp" class="input_number" maxlength="2" type="text" placeholder="Saisissez un départment" />
+       <a href="perso_liste.html" data-transition="pop"  data-role="button" onClick='setTimeout(function(){init_liste_medecin("cp");},200);'>Recherche par Département</a>
+
+       <br>
+       <br>
+
+       <input id="find_ville" type="text" placeholder="Saisissez une ville"  />
+       <a href="perso_liste.html" data-transition="pop"  data-role="button" onClick='setTimeout(function(){init_liste_medecin("ville");},200);'>Recherche par Ville</a>
+
+  </div>
+
+  </div>
+
+  <div data-role="footer">
+    <h1>Footer</h1>
+  </div>
+</div> 
+
+</body>
+</html>

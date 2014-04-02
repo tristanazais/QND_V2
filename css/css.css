@@ -1,0 +1,48 @@
+html, body {
+	/*position: fixed;*/
+	/*overflow: auto;*/
+	/*overflow-x: hidden;*/
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+	background-size: 100% 100%;
+	background-image:url(../images/trans_bg.png);
+}
+
+#content {
+		position: absolute;
+		top: 0;
+		margin:0;
+		background-repeat: no-repeat ;
+		-webkit-user-select: none;
+		background-size: 100% 100%;
+		/*overflow:hidden;*/
+		overflow-y: auto;
+		width:100%;
+		height:100%;
+		z-index:1;
+		-webkit-transition:opacity 0.3s linear;
+    	-webkit-transform: translateZ(0); 
+		-webkit-transition:-webkit-transform 0.47s ease;
+}
+
+.ui-content
+{
+	text-align: center;
+}
+
+#content_detail_perso > .space_label
+{
+	margin-top:25px;
+}
+#ctrl{
+width: 90%;
+margin:0 auto;
+}
+.gmap3{
+margin: 20px auto;
+border: 1px dashed #C0C0C0;
+width: 90%;
+height: 250px;
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+
+<html >
+
+	<head>
+		<meta http-equiv="content-language" content="fr-FR" />
+		<meta http-equiv="content-type" content="text/html"; charset="UTF-8" />
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="../css/calendar.css" />
+		
+		<LINK rel="stylesheet" type="text/css" href="../css/datepicker.css">
+		<LINK rel="stylesheet" type="text/css" href="../css/c.css">
+		
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		<meta name="viewport" content="width=device-width" />
+		 <!-- // <script src="js/cordova-2.7.0.js"></script> -->
+		<script src="../js/Chart.js"></script>
+		<script src="../js/modernizr.custom.63321.js"></script>
+		<script src="../js/save.js"></script>
+
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.tools.min.js"></script>
+		<script src="../js/jquerytouchwipe.js"></script>
+		<script src="../js/iscroll.js"></script>
+		<script src="../js/fonctions.js"></script>
+		<script src="../js/mail_oublie.js"></script>
+		<script src="../js/inscription.js"></script>
+		<script src="../js/calendar.js"></script>
+		<script src="../js/Ajout_favoris.js"></script>
+
+		<script src="../js/fonctions_medecin_part.js"></script>
+
+		<script type="text/javascript" src="js/jquery.calendario.js"></script>
+        
+        <!-- Test theme -->
+        <link rel="stylesheet" href="../css/themes/QND.min.css" />
+		<link rel="stylesheet" href="../css/themes/jquery.mobile.icons.min.css" />
+		
+        <link rel="stylesheet" href="../css/jquery.mobile.structure-1.4.0-rc.1.min.css" />
+        <link rel="stylesheet" type="text/css" href="../css/css.css" />
+		<script src="../js/jquery-1.10.2.min.js"></script>
+		<script src="../js/jquery.mobile-1.4.0-rc.1.min.js"></script>
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=true" type="text/javascript"></script>
+   	 	<script type="text/javascript" src="../js/gmap3.js"></script> 
+    	<script type="text/javascript" src="../js/geomap.js"></script> 
+    
+     <script type="text/javascript" src="../js/smsplugin.js"></script>
+		
+</head>
+
+<body>
+
+	<div data-role="page" id="pageone">
+  <div data-role="header">
+  	<div id="deconnexion" style="float: right;margin-right: 3%;margin-top: 1%;"><a href="../page/home.html" onclick="kill_session();">Deconnexion</a></div>
+    <h1>Menu</h1>
+
+  </div>
+
+	  <div data-role="content">
+       <div data-role="controlgroup" data-type="vertical">
+              
+              
+    <!-- <a href="favoris.html" data-transition="pop"  data-role="button" onClick='setTimeout(function(){init_favoris();},200);'>Mes Favoris</a> -->
+    <!-- <a href="geomap.html" data-transition="pop"  data-role="button" onClick='setTimeout(function(){ajax_gmap();},200);'>Carte des médecins QND</a> -->
+    <!-- <a href="stat.html" data-transition="flip"  data-role="button">Statisque</a> -->
+	<!-- <a href="choix_perso_liste.html" data-transition="flip"  data-role="button" onClick='setTimeout(function(){appel_number_size_max();},200);'>Liste de médecins QND</a> -->
+    <a href="info.html" data-transition="turn" data-role="button">Information</a>
+    <a href="profil.html" data-transition="turn" data-role="button" onClick='setTimeout(function(){init_profil_medecin_part();},200);'>Votre Profil</a>
+    <a href="calendar.html" data-transition="pop" data-role="button" onClick="setTimeout(function(){open_calendar_medecin_part();},200);">Calendrier</a>
+    
+    <!-- <a href="test_sms.html" data-transition="turn" data-role="button">SMS exemple </a> -->
+    
+      	</div>
+  	</div>
+  
+  <div data-role="footer">
+    <h1>Footer</h1>
+  </div>
+</div> 
+
+</body>
+</html>
