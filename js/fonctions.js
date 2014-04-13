@@ -12,7 +12,7 @@ if(!sessionStorage["id_medecin"])
 
 if(sessionStorage["id_medecin"]!="0")
 	sessionStorage['user_medecin_connect']='1';
-
+// localStorage.clear();
 /****************************** AJAX CONNEXION LOGIN MOT DE PASSE ***************************************/
 
 function se_loger()	{
@@ -87,8 +87,8 @@ function init_profil()
 	})
 	.success(function(data,textStatus,jqXHR) {
 		var result = JSON.parse(data);
-		console.log(result[0]);
-		console.log(sessionStorage["id_patient"]);
+		// console.log(result[0]);
+		// console.log(sessionStorage["id_patient"]);
 		
 		var html='<button id="envoi_info_perso" type="button" class="ui-btn ui-shadow ui-corner-all" onclick="modifier_profil();">Modifier Profil</button>';
 
@@ -161,4 +161,41 @@ function input_number(elem)
 function kill_session()
 {
 	sessionStorage.clear();
+}
+
+/************************** INIT PAGE MENU PATIENT (message rendez-vous) ***********************/
+
+function init_message_menu_patient()
+{
+	var html='Bonjour !<br>';
+	if(localStorage["calendar_data"])
+	{
+		var deparse_tab = JSON.parse(localStorage["calendar_data"]);
+
+		var confirme=0;
+		var annule=0;
+		var attente=0;
+
+		for (nbre in deparse_tab){
+			if(deparse_tab[nbre][0].confirme=='1')
+				confirme++;
+			else if(deparse_tab[nbre][0].confirme=='0')
+				attente++;
+			else if(deparse_tab[nbre][0].confirme=='-1')
+				annule++;
+		}
+		if(confirme!=0)
+			html+='Vous avez <span style="color:red">'+confirme+'</span> Rendez-vous de prévu<br>';
+		if(annule!=0)
+			html+='Vous avez <span style="color:red">'+annule+'</span> Rendez-vous annulé par un médecin<br>';
+		if(attente!=0)
+			html+='Vous avez <span style="color:red">'+attente+'</span> Rendez-vous en attente de confirmation<br>';
+	}
+	else
+	{
+		html+='Vous n\'avez aucun Rendez-vous de prévu';
+	}
+
+	$('#message').html(html);
+
 }

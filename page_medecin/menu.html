@@ -59,18 +59,12 @@
 
 	  <div data-role="content">
        <div data-role="controlgroup" data-type="vertical">
-              
-              
-    <!-- <a href="favoris.html" data-transition="pop"  data-role="button" onClick='setTimeout(function(){init_favoris();},200);'>Mes Favoris</a> -->
-    <!-- <a href="geomap.html" data-transition="pop"  data-role="button" onClick='setTimeout(function(){ajax_gmap();},200);'>Carte des médecins QND</a> -->
-    <!-- <a href="stat.html" data-transition="flip"  data-role="button">Statisque</a> -->
-	<!-- <a href="choix_perso_liste.html" data-transition="flip"  data-role="button" onClick='setTimeout(function(){appel_number_size_max();},200);'>Liste de médecins QND</a> -->
+
+    <p id="message" style="color: #708939;text-shadow: 0 1px 0 #8FEFDE; margin-bottom:20px;"></p>
     <a href="info.html" data-transition="turn" data-role="button">Information</a>
     <a href="profil.html" data-transition="turn" data-role="button" onClick='setTimeout(function(){init_profil_medecin_part();},200);'>Votre Profil</a>
     <a href="calendar.html" data-transition="pop" data-role="button" onClick="setTimeout(function(){open_calendar_medecin_part();},200);">Calendrier</a>
-    
-    <!-- <a href="test_sms.html" data-transition="turn" data-role="button">SMS exemple </a> -->
-    
+
       	</div>
   	</div>
   
@@ -78,6 +72,12 @@
     <h1>Footer</h1>
   </div>
 </div> 
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	init_message_menu();
+});
+</script>
 
 </body>
 </html>

@@ -1,3 +1,21 @@
+/************************** INIT PAGE MENU MEDECIN (message rendez-vous) ***********************/
+
+function init_message_menu()
+{
+	$.ajax({
+		url: 'http://www.vivactis-multimedia.fr/test_ajax/recup_rendez_vous_medecin_part.php',
+		type: 'POST',
+		dataType: 'text',
+		data: {id_med:sessionStorage["id_medecin"]},
+		})
+		.success(function(data,textStatus,jqXHR) {
+			$('#message').html('Bonjour, vous avez <span style="color:red">'+(JSON.parse(data)).length+'</span> nouveau(x) rendez-vous à confirmer');
+		})
+		.fail(function() {
+			alert("Erreur Serveur. Reessayer plus tard.");
+		});
+}
+
 /*************************** AU CLICK CALENDRIER DU MEDECIN *************************************/
 
 function open_calendar_medecin_part()
@@ -53,6 +71,14 @@ function addRdv_medecin_part(id_medecin)
 		  }
 		];
 
+		var a_new_rdvarray = {
+				    date_rdv: new_date,
+					motif: $("#motif").val(),
+				    horaire_debut: valeurdebut,
+				    confirmation: '1'
+				  };
+		array_calendar[array_calendar.length]=a_new_rdvarray;
+
 ////////// SAUVEGARDE EN AJAX EN BDD //////////////////////////////
 		$.ajax({
 		url: 'http://www.vivactis-multimedia.fr/test_ajax/enregistrer_rdv_medecin.php',
@@ -84,21 +110,7 @@ function addRdv_medecin_part(id_medecin)
 		 }
 		 calendarSetMonth($('.calendar'));
 
-		 $('.c-day').css('ZIndex', '8000');
-		 $('.c-day').click(function(event) {
-		 	addDay($(this));
-		 });
-		 $('.have-events').css('backgroundColor','#FA6C8E');
-
-		 $.each($('.have-events'), function(index, val) {
-			 	for(rdv in array_calendar)
-				{
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="1")
-			 			$(this).css('backgroundColor','blue');
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="0")
-			 			$(this).css('backgroundColor','yellow');
-			 	}
-			 });
+		 re_init_color();
 	}
 
 
@@ -114,8 +126,8 @@ function init_profil_medecin_part()
 	})
 	.success(function(data,textStatus,jqXHR) {
 		var result = JSON.parse(data);
-		console.log(result[0]);
-		console.log(sessionStorage["id_medecin"]);
+		// console.log(result[0]);
+		// console.log(sessionStorage["id_medecin"]);
 		
 		var html='<button id="envoi_info_perso" type="button" class="ui-btn ui-shadow ui-corner-all" onclick="modifier_profil_medecin_part();">Modifier Profil</button>';
 
@@ -154,7 +166,7 @@ function modifier_profil_medecin_part()
 			alert("Vos informations personnels ont bien été enregistrées");
 		else
 			alert("Assurez-vous que tous les champs soient remplis !");
-		console.log(data);
+		// console.log(data);
 	})
 	.fail(function() {
 		alert("Erreur Serveur. Reessayer plus tard.");

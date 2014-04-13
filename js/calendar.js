@@ -1,3 +1,5 @@
+var array_calendar=[];
+
 var yy;
 var calendarArray=[];
 var monthOffset = [6,7,8,9,10,11,0,1,2,3,4,5];
@@ -66,21 +68,7 @@ $(document).ready(function() {
 			calendarSetMonth(par,cm+1);
 		}
 
-		$('.c-day').css('ZIndex', '8000');
-		 $('.c-day').click(function(event) {
-		 	addDay($(this));
-		 });
-		 $('.have-events').css('backgroundColor','#FA6C8E');
-
-		 $.each($('.have-events'), function(index, val) {
-			 	for(rdv in array_calendar)
-				{
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="1")
-			 			$(this).css('backgroundColor','blue');
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="0")
-			 			$(this).css('backgroundColor','yellow');
-			 	}
-			 });
+		re_init_color();
 	}
 
 	function orderBy(deli,array) {
@@ -156,9 +144,17 @@ $(document).ready(function() {
 			 	for(rdv in array_calendar)
 				{
 			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="1")
+			 		{
 			 			$(this).css('backgroundColor','blue');
+			 		}
 			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="0")
-			 			$(this).css('backgroundColor','yellow');
+			 		{
+			 			$(this).css('backgroundColor','#D6D600');
+			 		}
+			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="-1")
+			 		{
+			 			$(this).css('backgroundColor','#FA6C8E');
+			 		}
 			 	}
 			 });
 		 $('.this-day').css('background','none repeat scroll 0 0 rgba(0, 0, 0, 0)');
@@ -176,7 +172,21 @@ $(document).ready(function() {
 		var ev = orderBy('start',this.events);
 		for(var o = 0; o<ev.length;o++) {
 			if(sessionStorage['calendar_medecin']=='0')
-			$(".s-scheme").append('<div class="s-event"><h1 style="margin-bottom:10px;">Motif : '+ev[o]['name']+'</h1><p data-role="dur"  style="margin-bottom:10px;">'+ev[o]['start']+' - '+ev[o]['end']+'</p><p data-role="loc">Lieu : '+ev[o]['location']+'</p><p data-role="loc">Medecin : '+ev[o]['medecin']+'</p></div>');
+			{
+				if(ev[o]['confirme']=='1')
+				{
+					var html_confirme_patient='<span style="color:blue;">Confirmé</span>';
+				}
+				else if(ev[o]['confirme']=='-1')
+				{
+					var html_confirme_patient='<span style="color:red;">Annulé</span>';
+				}
+				else if(ev[o]['confirme']=='0')
+				{
+					var html_confirme_patient='<span style="color:yellow;">En attente de confirmation du médecin</span>';
+				}
+				$(".s-scheme").append('<div class="s-event"><h1 style="margin-bottom:10px;">Motif : '+ev[o]['name']+'</h1><p data-role="dur"  style="margin-bottom:10px;">'+ev[o]['start']+' - '+ev[o]['end']+'</p><p data-role="loc">Lieu : '+ev[o]['location']+'</p><p data-role="loc">Medecin : '+ev[o]['medecin']+'</p><p style="margin-top:10px; data-role="loc">'+html_confirme_patient+'</p></div>');
+			}
 			else
 			{
 				var temp=ev[o]['date']+ev[o]['name'];
@@ -335,6 +345,7 @@ $(document).ready(function() {
 		return the_month;
 	}
 
+	
 
 	/*************************************** CALENDRIER GERER POUR PATIENT SEULEMENT (localstorage) ******************/
 
@@ -375,9 +386,18 @@ $(document).ready(function() {
 		    start: valeurdebut,
 		    end: valeurfin,
 		    location: $("#lieu").val(),
-		    medecin: $("#medecin").val()
+		    medecin: $("#medecin").val(),
+		    confirme: '1'
 		  }
 		];
+
+		var array_color_storage={
+				    date_rdv: new_date,
+					motif: $("#motif").val(),
+				    horaire_debut: valeurdebut,
+				    confirmation: '1'
+				  	};
+		array_calendar[array_calendar.length]=array_color_storage;
 
 ////////// SAUVEGARDE EN LOCAL STORAGE DE L'AJOUT //////////////////////////////
 		if(localStorage["calendar_data"])
@@ -390,8 +410,6 @@ $(document).ready(function() {
 			}
 			deparse_tab[last_id]=new_rdvarray;
 			
-			// console.log(new_rdvarray);
-			// console.log(deparse_tab);
 			localStorage.setItem("calendar_data", JSON.stringify(deparse_tab));
 		}
 		else
@@ -410,6 +428,7 @@ $(document).ready(function() {
 					tempeventarray["location"] = events.location;
 					tempeventarray["medecin"] = events.medecin;
 					tempeventarray["date"] = events.date;
+					tempeventarray["confirme"] = events.confirme;
 					if(calendarArray[events.date] == undefined) {
 						calendarArray[events.date] = [tempeventarray];
 					} else {
@@ -419,21 +438,7 @@ $(document).ready(function() {
 		 }
 		 calendarSetMonth($('.calendar'));
 
-		 $('.c-day').css('ZIndex', '8000');
-		 $('.c-day').click(function(event) {
-		 	addDay($(this));
-		 });
-		 $('.have-events').css('backgroundColor','#FA6C8E');
-
-		 $.each($('.have-events'), function(index, val) {
-			 	for(rdv in array_calendar)
-				{
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="1")
-			 			$(this).css('backgroundColor','blue');
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="0")
-			 			$(this).css('backgroundColor','yellow');
-			 	}
-			 });
+		 re_init_color();
 	}
 
 	function add_new_calendar()
@@ -445,14 +450,25 @@ $(document).ready(function() {
 			{
 				var deparse_tab = JSON.parse(localStorage["calendar_data"]);
 				var array = deparse_tab;
+				var array_color_storage;
+				for(i in array)
+				{
+					array_color_storage={
+					    date_rdv: array[i][0].date,
+						motif: array[i][0].name,
+					    horaire_debut: array[i][0].start,
+					    confirmation: array[i][0].confirme
+				  	};
+					array_calendar[i]=array_color_storage;
+				}
 			}
 			else
 			{
 				var array = '';
+				array_calendar=[];
 			}
 		
 		if(array != '') 
-		 //&& sessionStorage["calendrier"]=='0'
 		  {
 			for(current_date in array)
 			{
@@ -464,6 +480,7 @@ $(document).ready(function() {
 						tempeventarray["location"] = events.location;		
 						tempeventarray["medecin"] = events.medecin;		
 						tempeventarray["date"] = events.date;		
+						tempeventarray["confirme"] = events.confirme;		
 						if(calendarArray[events.date] == undefined) {
 							calendarArray[events.date] = [tempeventarray];
 						} else {
@@ -472,23 +489,10 @@ $(document).ready(function() {
 				});
 			}
 		 }
-		 // sessionStorage["calendrier"]='1';
-		 calendarSetMonth($('.calendar'));
-		 $('.c-day').css('ZIndex', '8000');
-		 $('.c-day').click(function(event) {
-		 	addDay($(this));
-		 });
-		 $('.have-events').css('backgroundColor','#FA6C8E');
 
-		 $.each($('.have-events'), function(index, val) {
-			 	for(rdv in array_calendar)
-				{
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="1")
-			 			$(this).css('backgroundColor','blue');
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="0")
-			 			$(this).css('backgroundColor','yellow');
-			 	}
-			 });
+		 calendarSetMonth($('.calendar'));
+		 
+		 re_init_color();
 
 	}
 
@@ -528,7 +532,8 @@ $(document).ready(function() {
 		    start: valeurdebut,
 		    end: '',
 		    location: adresse_med,
-		    medecin: nom_med
+		    medecin: nom_med,
+		    confirme: '0'
 		  }
 		];
 
@@ -587,24 +592,18 @@ $(document).ready(function() {
 		 }
 		 calendarSetMonth($('.calendar'));
 
-		 $('.c-day').css('ZIndex', '8000');
-		 $('.c-day').click(function(event) {
-		 	addDay($(this));
-		 });
-		 $('.have-events').css('backgroundColor','#FA6C8E');
+		 var a_new_rdvarray = {
+				    date_rdv: new_date,
+					motif: $("#motif").val(),
+				    horaire_debut: valeurdebut,
+				    confirmation: '0'
+				  };
+		array_calendar[array_calendar.length]=a_new_rdvarray;
 
-		 $.each($('.have-events'), function(index, val) {
-			 	for(rdv in array_calendar)
-				{
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="1")
-			 			$(this).css('backgroundColor','blue');
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="0")
-			 			$(this).css('backgroundColor','yellow');
-			 	}
-			 });
+		 re_init_color();
 	}
 
-	var array_calendar;
+
 
 	function add_calendar_this_medecin(id_medecin)
 	{
@@ -662,22 +661,8 @@ $(document).ready(function() {
 			 }
 			 // sessionStorage["calendrier"]='1';
 			 calendarSetMonth($('.calendar'));
-			 $('.c-day').css('ZIndex', '8000');
-			 $('.c-day').click(function(event) {
-			 	addDay($(this));
-			 });
-
-			 $('.have-events').css('backgroundColor','#FA6C8E');
-
-			 $.each($('.have-events'), function(index, val) {
-			 	for(rdv in array_calendar)
-				{
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="1")
-			 			$(this).css('backgroundColor','blue');
-			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="0")
-			 			$(this).css('backgroundColor','yellow');
-			 	}
-			 });
+			 
+			 re_init_color();
 
 
 		})
@@ -700,25 +685,50 @@ $(document).ready(function() {
 
 	function RDV_OK_ou_Annule(elem,date,motif,horaire,result)
 	{
+		var a_new_rdvarray = {
+				    date_rdv: date,
+					motif: motif,
+				    horaire_debut: horaire,
+				    confirmation: result
+				  };
+		array_calendar[array_calendar.length]=a_new_rdvarray;
+
+		if(localStorage["calendar_data"])
+		{
+			var deparse_tab = JSON.parse(localStorage["calendar_data"]);
+			var array_temp=deparse_tab;
+
+			for (nbre in array_temp){
+				if(array_temp[nbre][0].date==date && array_temp[nbre][0].name==motif && array_temp[nbre][0].start==horaire)
+					array_temp[nbre][0].confirme=result;
+				// console.log(array_temp);
+			}
+			
+			localStorage.setItem("calendar_data", JSON.stringify(array_temp));
+		}
+
+
 		if(result=="1")			// Confirme le rdv
 		{
 			$(elem).parent().html('<span style="color:blue;">Confirmé</span>');
 			sessionStorage[date+motif]="1";
+
 			$.each($('.have-events'), function(index, val) {
 				if($(this).attr('strtime')==date)
-			 		$(this).css('backgroundColor','blue');
+			 		$(this).css('backgroundColor','blue').addClass('have-events');
 			});
 		}
 		else if(result=="-1")				// Annuler le rdv
 		{
 			$(elem).parent().html('<span style="color:red;">Annulé</span>');
 			sessionStorage[date+motif]="-1";
+
 			$.each($('.have-events'), function(index, val) {
 				if($(this).attr('strtime')==date)
-			 		$(this).css('backgroundColor','#FA6C8E');
+			 		$(this).css('backgroundColor','#FA6C8E').addClass('have-events');
 			});
 		}
-			
+		re_init_color();	
 		$.ajax({
 		url: 'http://www.vivactis-multimedia.fr/test_ajax/confirmer_rdv_medecin_part.php',
 		type: 'POST',
@@ -733,4 +743,48 @@ $(document).ready(function() {
 			alert("Erreur Serveur. Reessayer plus tard.");
 		});
 		
+	}
+
+
+	/******************************** FONCTION RE-INIT COLOR BLOCK CALENDAR REPEAT *******************************/
+
+	function re_init_color()
+	{
+		 $('.c-day').css('ZIndex', '8000');
+		 $('.c-day').click(function(event) {
+		 	addDay($(this));
+		 });
+		 $('.have-events').css('backgroundColor','#FA6C8E');
+		 
+		 var cpt;
+		 var blue;
+		 var yellow;
+		 var red;
+		 $.each($('.have-events'), function(index, val) {
+		 cpt=0;
+		 blue=false;
+		 yellow=false;
+		 red=false;
+			 	for(rdv in array_calendar)
+				{
+			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="1")
+			 		{
+			 			$(this).css('backgroundColor','blue');cpt++;blue=true;
+			 		}
+			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="0")
+			 		{
+			 			$(this).css('backgroundColor','#D6D600');cpt++;yellow=true;
+			 		}
+			 		if(array_calendar[rdv].date_rdv==$(this).attr('strtime') && array_calendar[rdv].confirmation=="-1")
+			 		{
+			 			$(this).css('backgroundColor','#FA6C8E');cpt++;red=true;
+			 		}
+			 	}
+			 	if(cpt>1)
+			 	{
+			 		if(red)$(this).css('backgroundColor','#FA6C8E');
+			 		if(blue)$(this).css('backgroundColor','blue');
+			 		if(yellow)$(this).css('backgroundColor','#D6D600');
+			 	}
+		});
 	}
