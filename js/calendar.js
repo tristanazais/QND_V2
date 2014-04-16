@@ -200,7 +200,9 @@ $(document).ready(function() {
 				}
 				else if(ev[o]['confirme']=='0' && sessionStorage['user_medecin_connect']=="1")
 				{
-					var html_confirme='Confirmer le RDV ? <input style="padding:0;display:inline;margin-left:20px;" class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="button" onclick="RDV_OK_ou_Annule(this,\''+ev[o]['date']+'\',\''+ev[o]["name"]+'\',\''+ev[o]['start']+'\',\'1\');" value="Oui" id="rdv_ok"/><input style="padding:0;display:inline;margin-left:20px;" class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="button" onclick="RDV_OK_ou_Annule(this,\''+ev[o]['date']+'\',\''+ev[o]["name"]+'\',\''+ev[o]['start']+'\',\'-1\');" value="Non" id="rdv_annule"/>';
+					var new_chaine = ev[o]["name"].replace("'",'');
+
+					var html_confirme='Confirmer le RDV ? <input style="padding:0;display:inline;margin-left:20px;" class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="button" onclick="RDV_OK_ou_Annule(this,\''+ev[o]['date']+'\',\''+new_chaine+'\',\''+ev[o]['start']+'\',\'1\');" value="Oui" id="rdv_ok"/><input style="padding:0;display:inline;margin-left:20px;" class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="button" onclick="RDV_OK_ou_Annule(this,\''+ev[o]['date']+'\',\''+new_chaine+'\',\''+ev[o]['start']+'\',\'-1\');" value="Non" id="rdv_annule"/>';
 				}
 				else if(ev[o]['confirme']=='0' && sessionStorage['user_medecin_connect']=="0")
 				{
